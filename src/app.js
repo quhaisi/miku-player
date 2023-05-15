@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
+import PlayBar from './components/play_bar'
 
 export default function app () {
 
@@ -118,6 +119,7 @@ export default function app () {
 
   return (
     <div>
+      <PlayBar />
       <div>
         正在播放：{current}
         <br/>

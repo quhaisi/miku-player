@@ -22,7 +22,21 @@ module.exports = {
             ]
           }
         }
-      }
+      },
+      {
+        test: /\.styl$/,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "stylus-loader",
+          }
+        ],
+      },
     ]
   },
   plugins: [new HtmlWebpackPlugin({
