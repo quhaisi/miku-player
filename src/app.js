@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
-import PlayBar from './components/play_bar'
+import PlayBar from './components/play-bar'
 
 export default function app () {
 
@@ -33,14 +33,17 @@ export default function app () {
     return sourceMusicList.filter(music => music.includes(searchText))
   }, [sourceMusicList, searchText])
 
-  useEffect(async () => {
-    // 获取缓存的播放方式
-    setPlayType(localStorage.getItem('playType') || 0)
-    // 直接获取上次选择的路径下的歌曲
-    if(localStorage.getItem('defaultPath')) {
-      const result = await window.electronAPI.getDefaultMusicList(localStorage.getItem('defaultPath'))
-      setSourceMusicList(Array.isArray(result) ? result : [])
-    }
+  useEffect(() => {
+    (async () => {
+      // 获取缓存的播放方式
+      setPlayType(localStorage.getItem('playType') || 0)
+      // 直接获取上次选择的路径下的歌曲
+        console.log('result',localStorage.getItem('defaultPath'));
+      if(localStorage.getItem('defaultPath')) {
+        const result = await window.electronAPI.getDefaultMusicList(localStorage.getItem('defaultPath'))
+        setSourceMusicList(Array.isArray(result) ? result : [])
+      }
+    })()
   }, [])
 
   useEffect(() => {
@@ -130,12 +133,12 @@ export default function app () {
       <button onClick={nextMusic}>下一首</button>
       <input type="number" min="0" max="100" step="5" value={volume} onInput={e => setVolume(e.target.value)} />
       <select value={playType} onChange={palyTypeHandler}>
-        { playTypes.map(type => <option value={type.code}>{type.desc}</option>)}
+        { playTypes.map(type => <option key={type.code} value={type.code}>{type.desc}</option>)}
       </select>
       <br/>
       <input type="text" value={searchText} onInput={e => setSearchText(e.target.value)} />
       <ul>
-        {musicList.map(music => <li onClick={() => playMusic(music)}>{music.substring(music.lastIndexOf('/')+1)}</li>)}
+        {musicList.map(music => <li key={music} onClick={() => playMusic(music)}>{music.substring(music.lastIndexOf('/')+1)}</li>)}
       </ul>
     </div>
   )
