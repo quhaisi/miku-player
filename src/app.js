@@ -120,6 +120,10 @@ export default function app () {
     setPlayType(playType)
   }
 
+  const bubbleShow = () => {
+    window.electronAPI.bubbleShow()
+  }
+
   return (
     <div>
       <PlayBar />
@@ -131,6 +135,7 @@ export default function app () {
       <button onClick={() => getMusicList()}>获取音乐列表</button>
       <button onClick={playList}>播放列表</button>
       <button onClick={nextMusic}>下一首</button>
+      <button onClick={bubbleShow}>悬浮窗测试</button>
       <input type="number" min="0" max="100" step="5" value={volume} onInput={e => setVolume(e.target.value)} />
       <select value={playType} onChange={palyTypeHandler}>
         { playTypes.map(type => <option key={type.code} value={type.code}>{type.desc}</option>)}

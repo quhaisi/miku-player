@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, dialog, Menu } = require('electron')
 const path = require('path')
 const { readdir } = require('node:fs/promises')
 const { resourceLimits } = require('worker_threads')
+const { createBubbleWindow } = require('./bubble')
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
@@ -50,6 +51,9 @@ app.whenReady().then(() => {
   })
   ipcMain.handle('dialog:getDefaultMusicList', async (event, path) => {
     return await getMusicFromPath(path)
+  })
+  ipcMain.on('bubble:show', (event) => {
+    createBubbleWindow()
   })
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
